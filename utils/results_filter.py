@@ -26,14 +26,14 @@ class FilterBacBo(FilterResults):
             print('API indidisponivel tentando reconectar...')
             return {'results': 'error,'}
 
-    def result(self) -> List[str]:
+    def result(self, index: int) -> List[str]:
         try:
             return [x.replace(
                 'Player,', 'p'
             ).replace(
                 'Banker,', 'b'
             ).replace('Tie,', 't') for x in self.get_result()['results'].split(
-            )[0:4]]
+            )[0:index]]
         except Exception:
             return ['null', 'null', 'null', 'null']
 

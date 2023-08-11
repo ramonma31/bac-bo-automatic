@@ -57,7 +57,7 @@ class PatternPlayer(Strategy):
         self.result = FilterBacBo()
 
     def strategy(self) -> None:
-        pattern = self.result.result()
+        pattern = self.result.result(4)
         if pattern in self.patterns.values():
             return f'{self.__class__.__name__}'
         return self.successor.strategy(pattern)
@@ -68,7 +68,6 @@ class PatternBanker(Strategy):
         super().__init__()
         self.patterns = PATERN_BANKER
         self.successor = successor
-        self.lock = False
 
     def strategy(self, pattern: List[str]) -> bool:
         if pattern in self.patterns.values():
@@ -81,7 +80,6 @@ class PatternPlayerTwo(Strategy):
         super().__init__()
         self.patterns = PATERN_PLAYER_SIMPLE
         self.successor = successor
-        self.result = FilterBacBo()
 
     def strategy(self, pattern: List[str]) -> None:
         if pattern[0:2] in self.patterns.values():
@@ -92,9 +90,8 @@ class PatternPlayerTwo(Strategy):
 class PatternBankerTwo(Strategy):
     def __init__(self, successor: Strategy) -> None:
         super().__init__()
-        self.patterns = PATERN_BANKER
+        self.patterns = PATERN_BANKER_SIMPLE
         self.successor = successor
-        self.lock = False
 
     def strategy(self, pattern: List[str]) -> bool:
         if pattern[0:2] in self.patterns.values():
@@ -109,7 +106,7 @@ class PatternPlayerSimple(Strategy):
         self.result = FilterBacBo()
 
     def strategy(self) -> str:
-        pattern = self.result.result()
+        pattern = self.result.result(4)
         if pattern[0] == self.patterns['patterns_1'][0]:
             return 'PatternPlayerSimple'
         return self.successor.strategy(pattern)
